@@ -23,7 +23,7 @@ Im Programm wird der zeitliche Abstand der Minmumdurchgänge dieses Brummen geme
 der Periodendauer entspricht.
 Aus dem Kehrwert der Periodendauer ergibt sich dann die Frequenz.
 
-Um die Sache etwas genauer zu machen wird die Zeit für 50 Period gemessen und dann
+Um die Sache etwas genauer zu machen wird die Zeit für 50 Perioden gemessen und dann
 gemittelt.
 
 Die gemessene Frequenz kann dann mit der Frequenz von http://www.netzfrequenzmessung.de/
