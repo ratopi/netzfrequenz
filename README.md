@@ -9,6 +9,10 @@ oder zu wenig Strom ins Netz eingespeist wird.
 Wird zu wenig Strom eingespeist, so sinkt die Netzfrequenz.
 Wird zu viel Strom eingespeist, so steigt die Netzfrequenz.
 
+Eine solche Messung könnte in Zukunft in Zusammenhang mit "Smart Grids" interessant werden, da sich über die Frequenzmessung an jedem Ort unabhängig von einer Zentrale der Lastzustand des Gesamtnetzes beurteilen lässt und somit Verbraucher gezielt vor Ort ein und ausgeschaltet werden könnten.
+Siehe dazu auch: http://www.solarify.eu/2015/01/27/205-smart-grid-einfach-dezentral-selbstorganisiert/
+
+
 ## Programm
 
 An Port A0 wird einfach ein kurzes Stück Draht (beispielsweise 10cm) angeschlossen.
