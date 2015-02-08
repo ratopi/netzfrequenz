@@ -1,10 +1,14 @@
 /**
-  *
+  * Bestimmung der Netzfrequenz
+  * Copyright 2015 by Ralf Th. Pietsch <ratopi@abwesend.de>
+  * LICENSE: MIT
   */
   
 #define PROBE_COUNT 50
 #define MICROS 1000000.
 #define KORREKTUR 1.001341341
+
+#define DEBUG 0
 
 int min;
 int max;
@@ -48,17 +52,20 @@ void loop()
   }
   end = micros();
   freq = ( ( PROBE_COUNT * MICROS * KORREKTUR ) / ( end - start ) );
-  Serial.print( min );
-  Serial.print( " " );
-  Serial.print( max );
-  Serial.print( " " );
+  if ( DEBUG ) 
+  {
+    Serial.print( min );
+    Serial.print( " " );
+    Serial.print( max );
+    Serial.print( " " );
+  }
   Serial.println( freq, 3 );
 }
 
 void period()
 {
-  while ( analogReadPlus() > 50 ); // myDelay();
-  while ( analogReadPlus() < 100 ); // myDelay();
+  while ( analogReadPlus() > 50 );
+  while ( analogReadPlus() < 100 );
 }
 
 int analogReadPlus() 
@@ -69,10 +76,5 @@ int analogReadPlus()
   if ( val > max ) max = val;
   
   return val;
-}
-
-void myDelay()
-{
-  for ( j = 0; j < 10000; j++ );
 }
 
