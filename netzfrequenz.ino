@@ -6,7 +6,8 @@
   
 #define PROBE_COUNT 50
 #define MICROS 1000000.
-#define KORREKTUR 1.001341341
+// #define KORREKTUR 1.001341341
+#define KORREKTUR 1.
 
 #define DEBUG 0
 
