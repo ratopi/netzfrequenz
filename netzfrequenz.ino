@@ -1,15 +1,18 @@
 /**
   * Bestimmung der Netzfrequenz
-  * Copyright 2015 by Ralf Th. Pietsch <ratopi@abwesend.de>
+  * Copyright 2015-2022 by Ralf Th. Pietsch <ratopi@abwesend.de>
   * LICENSE: MIT
   */
+
+
+// Activate for more log output
+// #define DEBUG
+
   
 #define PROBE_COUNT 50
 #define MICROS 1000000.
 // #define KORREKTUR 1.001341341
 #define KORREKTUR 1.
-
-#define DEBUG 0
 
 int min;
 int max;
@@ -53,13 +56,14 @@ void loop()
   }
   end = micros();
   freq = ( ( PROBE_COUNT * MICROS * KORREKTUR ) / ( end - start ) );
-  if ( DEBUG ) 
-  {
-    Serial.print( min );
-    Serial.print( " " );
-    Serial.print( max );
-    Serial.print( " " );
-  }
+
+#ifdef DEBUG
+  Serial.print( min );
+  Serial.print( " " );
+  Serial.print( max );
+  Serial.print( " " );
+#endif
+
   Serial.println( freq, 3 );
 }
 
