@@ -4,78 +4,94 @@
   * LICENSE: MIT
   */
   
-#define PROBE_COUNT 50
+#define PROBE_COUNT 90
 #define MICROS 1000000.
-// #define KORREKTUR 1.001341341
-#define KORREKTUR 1.
+#define PROBE_COUNT_KORREKTUR 20
 
-#define DEBUG 0
-
-int min;
-int max;
 int val;
+int counter = 0;
 int i, j;
 float freq;
 
 long start;
 long end;
 
+long min = 30000;
+long max = 0;
+
+long adding = 0;
+
+int myarray[PROBE_COUNT];
+
 void setup()
 {  
-  Serial.begin( 9600 );
+  Serial.begin( 115200 );
 
   analogReference( INTERNAL );
-  
-  Serial.println( "reading 10000 samples ..." );
   
   for ( i = 0; i < 10000; i++ )
   {
       analogRead( A0 );
   }
-  
-  Serial.println( "waiting for first period");
-  
-  period();
-
-  end = micros();
-  
-  Serial.println( "starting..." );
 }
 
 void loop()
 {
-  start = end;
-  min = 1024;
+
+  while ( analogReadPlus() != 0 );
+  while ( analogReadPlus() == 0 );
+
+  adding = 0;
+  min = 30000;
   max = 0;
+
   for ( i = 0; i < PROBE_COUNT; i++ )
   {
-    period();
+    period(i);
   }
-  end = micros();
-  freq = ( ( PROBE_COUNT * MICROS * KORREKTUR ) / ( end - start ) );
-  if ( DEBUG ) 
+ 
+  sort(myarray,PROBE_COUNT);
+
+  for ( i = PROBE_COUNT_KORREKTUR; i < (PROBE_COUNT - PROBE_COUNT_KORREKTUR); i++ )
   {
-    Serial.print( min );
-    Serial.print( " " );
-    Serial.print( max );
-    Serial.print( " " );
+    adding = adding + myarray[i];
   }
+  
+  freq = ( ( (PROBE_COUNT - ( 2 * PROBE_COUNT_KORREKTUR ) ) * MICROS ) / ( adding ) ) * 1000;
+  // das letzte * 1000 dient nur dazu, den serial plotter benutzen zu können
+  // für die korrekte Ausgabe auf dem serial Monitor muss das entfernt werden
+
   Serial.println( freq, 3 );
+  
 }
 
-void period()
+void period(int i)
 {
-  while ( analogReadPlus() > 50 );
-  while ( analogReadPlus() < 100 );
+
+  start = micros();
+  while ( analogReadPlus() != 0 );
+  delay(2);
+  while ( analogReadPlus() == 0 );
+  end = micros();
+
+  myarray[i] = (end - start);
+
 }
 
 int analogReadPlus() 
 {
   val = analogRead( A0 );
-  
-  if ( val < min ) min = val;
-  if ( val > max ) max = val;
-  
   return val;
 }
 
+void sort(int a[], int size) {
+    for(int i=0; i<(size-1); i++) {
+        for(int o=0; o<(size-(i+1)); o++) {
+                if(a[o] > a[o+1]) {
+                    int t = a[o];
+                    a[o] = a[o+1];
+                    a[o+1] = t;
+                }
+        }
+    }
+}
